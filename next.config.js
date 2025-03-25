@@ -1,18 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  output: 'export',
+  distDir: 'out',
   images: {
-    domains: [],
+    unoptimized: true,
   },
-  i18n: {
-    locales: ['en', 'zh'],
-    defaultLocale: 'zh',
-  },
-  webpack: (config) => {
-    // 路径别名配置
-    return config;
-  },
+  trailingSlash: true,
 }
 
 module.exports = nextConfig 
