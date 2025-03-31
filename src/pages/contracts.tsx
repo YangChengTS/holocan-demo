@@ -152,7 +152,7 @@ const faqs = [
       zh: '加拿大和中国公司之间的合同适用哪种法律体系？'
     },
     answer: {
-      en: 'Contracts between Canadian and Chinese companies should explicitly state the governing law. Parties can choose either Canadian or Chinese law, or opt for a neutral third country's law. The choice of law will significantly impact contract interpretation and enforcement.',
+      en: "Contracts between Canadian and Chinese companies should explicitly state the governing law. Parties can choose either Canadian or Chinese law, or opt for a neutral third country's law. The choice of law will significantly impact contract interpretation and enforcement.",
       zh: '加中公司间的合同应明确规定适用法律。双方可以选择加拿大法律、中国法律，或选择中立的第三国法律。法律选择将显著影响合同解释和执行。'
     }
   },
@@ -163,7 +163,7 @@ const faqs = [
       zh: '如何确保合同在跨境情况下的可执行性？'
     },
     answer: {
-      en: 'To ensure enforceability, contracts should include clear dispute resolution mechanisms (preferably arbitration), explicit governing law clauses, proper authentication of documents, and consideration of both countries' mandatory legal requirements.',
+      en: "To ensure enforceability, contracts should include clear dispute resolution mechanisms (preferably arbitration), explicit governing law clauses, proper authentication of documents, and consideration of both countries' mandatory legal requirements.",
       zh: '为确保可执行性，合同应包含明确的争议解决机制（最好是仲裁），明确的适用法律条款，文件的适当认证，并考虑两国的强制性法律要求。'
     }
   },
