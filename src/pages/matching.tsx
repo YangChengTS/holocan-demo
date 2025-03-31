@@ -5,6 +5,20 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FaArrowRight, FaChartPie, FaCheck, FaHandshake, FaLightbulb, FaPercentage } from 'react-icons/fa';
 import { useLanguage } from '@/context/LanguageContext';
+import MatchingForm from '@/components/matching/ui/MatchingForm';
+import MatchingResults from '@/components/matching/results/MatchingResults';
+
+// 匹配结果类型定义
+export type MatchResult = {
+  id: string;
+  companyName: string;
+  logo: string;
+  description: string;
+  matchScore: number;
+  location: string;
+  industry: string;
+  contactPerson: string;
+};
 
 const Matching: NextPage = () => {
   const { t } = useLanguage();
@@ -15,6 +29,9 @@ const Matching: NextPage = () => {
   const [selectedCompanySize, setSelectedCompanySize] = useState('');
   const [selectedProductType, setSelectedProductType] = useState('');
   const [selectedMarket, setSelectedMarket] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [results, setResults] = useState<MatchResult[]>([]);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleNext = () => {
     if (activeStep < 3) {
@@ -91,6 +108,72 @@ const Matching: NextPage = () => {
       ]
     },
   ];
+
+  // 处理匹配请求
+  const handleMatchingRequest = async (formData: any) => {
+    setIsLoading(true);
+    setHasSearched(true);
+    
+    // 模拟API请求延迟
+    setTimeout(() => {
+      // 生成模拟数据
+      const mockResults: MatchResult[] = [
+        {
+          id: '1',
+          companyName: 'Toronto Tech Solutions',
+          logo: '/company-logos/toronto-tech.png',
+          description: '专注于软件开发和IT解决方案的加拿大技术公司，拥有10年行业经验。',
+          matchScore: 92,
+          location: '多伦多, 安大略省',
+          industry: '信息技术',
+          contactPerson: 'John Smith',
+        },
+        {
+          id: '2',
+          companyName: 'Vancouver Green Energy',
+          logo: '/company-logos/vancouver-energy.png',
+          description: '可再生能源技术和解决方案提供商，专注于太阳能和风能项目。',
+          matchScore: 87,
+          location: '温哥华, 不列颠哥伦比亚省',
+          industry: '可再生能源',
+          contactPerson: 'Emma Wilson',
+        },
+        {
+          id: '3',
+          companyName: 'Montreal Food Exports',
+          logo: '/company-logos/montreal-food.png',
+          description: '专业食品加工和出口公司，产品涵盖有机食品、冷冻食品和饮料。',
+          matchScore: 79,
+          location: '蒙特利尔, 魁北克省',
+          industry: '食品和饮料',
+          contactPerson: 'Pierre Dubois',
+        },
+        {
+          id: '4',
+          companyName: 'Calgary Oil Equipment',
+          logo: '/company-logos/calgary-oil.png',
+          description: '石油开采和加工设备供应商，提供高品质的设备和技术支持。',
+          matchScore: 76,
+          location: '卡尔加里, 阿尔伯塔省',
+          industry: '能源与矿产',
+          contactPerson: 'Robert Johnson',
+        },
+        {
+          id: '5',
+          companyName: 'Ottawa Medical Supplies',
+          logo: '/company-logos/ottawa-medical.png',
+          description: '医疗设备和用品供应商，专注于高品质的医疗产品和解决方案。',
+          matchScore: 71,
+          location: '渥太华, 安大略省',
+          industry: '医疗健康',
+          contactPerson: 'Sarah Thompson',
+        },
+      ];
+      
+      setResults(mockResults);
+      setIsLoading(false);
+    }, 2000);
+  };
 
   return (
     <Layout

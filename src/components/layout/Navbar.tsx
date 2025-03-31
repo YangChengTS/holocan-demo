@@ -8,9 +8,8 @@ import { useLanguage } from '@/context/LanguageContext';
 // Navigation links based on the uploaded menu structure
 const getNavLinks = (t) => [
   { href: '/', label: t('navbar.home') },
-  { href: '/what-we-do', label: t('navbar.whatWeDo') },
-  { href: '/industries', label: t('navbar.industries') },
   { href: '/exhibition', label: t('navbar.exhibition') },
+  { href: '/matching', label: t('navbar.matching') },
   { href: '/contracts', label: t('navbar.contracts') },
   { href: '/logistics', label: t('navbar.logistics') },
   { href: '/finance', label: t('navbar.finance') },

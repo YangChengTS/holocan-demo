@@ -17,6 +17,7 @@ HoloCAN是一个基于AI技术的虚拟展会贸易平台，致力于解决中�
 - **3D渲染**: Three.js / React Three Fiber
 - **动画**: Framer Motion
 - **国际化**: Next.js i18n
+- **部署**: Cloudflare Pages
 
 ## 开始使用
 
@@ -76,6 +77,89 @@ demo-version/
 2. **虚拟展厅演示**: 3D虚拟展厅的基础展示功能
 3. **AI匹配功能**: 企业匹配功能的用户界面和交互流程
 4. **用户注册/登录**: 基础用户认证流程
+
+## 部署说明
+
+### Cloudflare Pages 配置
+
+1. **GitHub 集成**
+   - 将项目推送到GitHub仓库
+   - 在Cloudflare Dashboard中创建Pages项目并关联GitHub仓库
+
+2. **构建配置**
+   - 构建命令: `npm run build`
+   - 输出目录: `out`
+   - Node.js版本: 18.17.0（使用最新LTS版本可能导致兼容性问题）
+
+3. **环境变量设置**
+   - 无需特殊环境变量
+
+4. **Next.js 导出配置**
+   - 确保`next.config.js`中包含以下配置:
+   ```js
+   /** @type {import('next').NextConfig} */
+   const nextConfig = {
+     output: 'export',  // 静态导出选项
+     reactStrictMode: true,
+     images: {
+       unoptimized: true, // Cloudflare Pages目前不支持Next.js的图像优化
+     },
+   };
+   
+   module.exports = nextConfig;
+   ```
+
+### DNS 配置
+
+1. **添加DNS记录**
+   - 进入Cloudflare的DNS管理页面
+   - 添加两条CNAME记录:
+     * 名称: `@` (根域名), 指向: `[your-pages-project].pages.dev`
+     * 名称: `www`, 指向: `[your-pages-project].pages.dev`
+
+2. **自定义域配置**
+   - 在Pages项目中的"自定义域"部分
+   - 添加根域名和www子域名
+   - 注意: 确保没有域名冲突，如果提示域名已被使用，需要先清理已有关联
+
+3. **SSL/TLS设置**
+   - 确认SSL/TLS加密模式设为"完全"
+   - Cloudflare会自动配置和管理SSL证书
+
+### 常见问题及解决方案
+
+1. **522 Connection Timed Out错误**
+   - **原因**: 通常是由于Cloudflare无法连接到源站点或DNS配置错误
+   - **解决方案**:
+     * 确认Pages项目部署成功
+     * 验证DNS记录正确指向Pages URL
+     * 检查自定义域名设置是否完成
+     * 清除Cloudflare缓存
+
+2. **部署失败**
+   - **原因**: 构建命令错误或Node.js版本不兼容
+   - **解决方案**:
+     * 使用Node.js 18.x LTS版本
+     * 确保package.json中的构建脚本正确
+     * 检查项目依赖是否兼容
+
+3. **图像加载问题**
+   - **原因**: Next.js图像优化与Cloudflare Pages静态导出冲突
+   - **解决方案**:
+     * 在next.config.js中设置`images: { unoptimized: true }`
+     * 使用标准<img>标签替代Next.js的Image组件
+
+4. **DNS传播延迟**
+   - **原因**: DNS更改需要时间传播
+   - **解决方案**:
+     * 等待24小时让DNS更改完全生效
+     * 使用`nslookup`或在线DNS查询工具验证记录更新
+
+## 资源链接
+
+- [Next.js文档](https://nextjs.org/docs)
+- [Cloudflare Pages文档](https://developers.cloudflare.com/pages/)
+- [TailwindCSS文档](https://tailwindcss.com/docs)
 
 ## 许可证
 

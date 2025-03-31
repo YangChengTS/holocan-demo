@@ -18,9 +18,8 @@ export const translations = {
   en: {
     // Navbar
     'navbar.home': 'Home',
-    'navbar.whatWeDo': 'What We Do',
-    'navbar.industries': 'Industries',
     'navbar.exhibition': 'Our Exhibition',
+    'navbar.matching': 'AI Matching',
     'navbar.contracts': 'Contracts & Legal',
     'navbar.logistics': 'Cross-border Logistics',
     'navbar.finance': 'Financing Platform',
@@ -127,9 +126,8 @@ export const translations = {
   zh: {
     // 导航栏
     'navbar.home': '首页',
-    'navbar.whatWeDo': '我们的服务',
-    'navbar.industries': '行业领域',
     'navbar.exhibition': '虚拟展厅',
+    'navbar.matching': 'AI智能匹配',
     'navbar.contracts': '合同与法务',
     'navbar.logistics': '跨境物流',
     'navbar.finance': '融资平台',
@@ -137,7 +135,7 @@ export const translations = {
     'navbar.signIn': '登录',
     'navbar.language': '中文',
     
-    // 英雄区
+    // Hero section
     'hero.title': 'HoloCAN',
     'hero.slogan1': '你好，加拿大。你好，新机遇。',
     'hero.slogan2': 'HoloCan — 见证贸易的未来',
@@ -146,7 +144,7 @@ export const translations = {
     'hero.button.matching': '开始智能匹配',
     'hero.button.exhibition': '探索虚拟展厅',
     
-    // 特点部分
+    // Features section
     'features.title': '智能跨境贸易解决方案',
     'features.description': 'HoloCAN平台利用数字技术提供全面的跨境贸易服务，使中加企业间的协作更简单、更高效',
     'features.virtual.title': '虚拟展厅',
@@ -167,7 +165,7 @@ export const translations = {
     'matching.button': '开始匹配',
     'matching.heroDescription': '我们的人工智能系统分析企业需求和产品特点，帮助中加企业找到最理想的商业伙伴，降低跨境贸易壁垒。',
     
-    // 案例部分
+    // Cases section
     'cases.title': '成功合作案例',
     'cases.description': '众多企业通过HoloCAN平台找到理想合作伙伴，开启跨境业务增长之旅',
     'cases.case1.title': '温哥华科技公司',
@@ -178,12 +176,12 @@ export const translations = {
     'cases.case3.description': '通过AI匹配找到中国区域代理，快速进入亚洲市场，显著提高品牌认知度。',
     'cases.learnMore': '了解更多',
     
-    // 号召部分
+    // CTA section
     'cta.title': '加入HoloCAN，突破贸易壁垒',
     'cta.description': '立即注册，开启您的跨境贸易之旅',
     'cta.button': '免费注册',
     
-    // 登录页面
+    // Login page
     'login.title': '登录',
     'login.email': '电子邮箱',
     'login.password': '密码',
@@ -193,7 +191,7 @@ export const translations = {
     'login.register': '创建账户',
     'login.remember': '记住我',
     
-    // 虚拟展厅部分
+    // Virtual Exhibition section
     'exhibition.title': '沉浸式虚拟展览体验',
     'exhibition.description': '通过3D展示技术，您的产品和服务打破地域限制，可随时随地向潜在客户和合作伙伴展示，同时提供实时互动和沟通。',
     'exhibition.point1': '高清3D产品展示，浏览体验流畅无阻',
@@ -201,7 +199,7 @@ export const translations = {
     'exhibition.point3': '多媒体公司介绍，提升品牌形象',
     'exhibition.button': '访问展厅',
     
-    // 展厅页面
+    // Exhibition page
     'exhibitionPage.title': '3D虚拟展厅',
     'exhibitionPage.description': '体验突破地域限制的全新商务展示方式，足不出户即可参观来自中国和加拿大的企业展厅，了解产品和服务。',
     'exhibitionPage.tab.overview': '展厅概览',
