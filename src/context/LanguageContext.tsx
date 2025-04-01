@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 // 定义语言类型
 export type Language = 'en' | 'zh';
@@ -122,6 +122,54 @@ export const translations = {
     'matchingPage.matching.description': 'Matching from product interactions, market demands, business requirements and other multi-dimensions, ensuring matching results are comprehensive and feasible.',
     'matchingPage.cooperation.title': 'Facilitating Cooperation',
     'matchingPage.cooperation.description': 'Providing enterprises with contact channels, business meeting arrangements and partnership guidance, accelerating cooperation processes.',
+    
+    // Download page
+    'download.title': 'Client Downloads',
+    'download.desktop.title': 'Desktop Client',
+    'download.mobile.title': 'Mobile Client',
+    'download.windows.description': 'Supports Windows 10 and above',
+    'download.macos.description': 'Supports macOS 10.15 and above',
+    'download.android.description': 'Supports Android 8.0 and above',
+    'download.ios.description': 'Supports iOS 13.0 and above',
+    'download.button.download': 'Download Now',
+    'download.button.appstore': 'App Store',
+    'download.button.apk': 'Download APK',
+    'download.qr.scan': 'Scan to Download',
+    'download.features.title': 'Features',
+    'download.features.virtual.title': 'Virtual Exhibition',
+    'download.features.virtual.description': '3D virtual exhibition, visit trade shows without leaving home',
+    'download.features.translation.title': 'Real-time Translation',
+    'download.features.translation.description': 'AI-powered real-time translation, breaking language barriers',
+    'download.features.chat.title': 'Online Negotiation',
+    'download.features.chat.description': 'HD video conferencing, supporting multi-party online negotiations',
+    'download.system.title': 'System Requirements',
+    'download.system.desktop': 'Windows/macOS',
+    'download.system.mobile': 'Android/iOS',
+    
+    // Financing Platform Page
+    'financing.title': 'Cross-border Financing Solutions',
+    'financing.subtitle': 'Providing comprehensive cross-border trade financing services for Chinese and Canadian enterprises',
+    'financing.trade.title': 'Trade Financing',
+    'financing.trade.description': 'Providing comprehensive financing support for import and export trade, including order financing and accounts receivable financing.',
+    'financing.credit.title': 'Credit Services',
+    'financing.credit.description': 'Providing credit certification, verification, and tax services to reduce international trade risks.',
+    'financing.insurance.title': 'Insurance Services',
+    'financing.insurance.description': 'Providing investment insurance, trade insurance, and various insurance services.',
+    'financing.process.title': 'Financing Application Process',
+    'financing.process.step1': 'Submit Application',
+    'financing.process.step1.desc': 'Fill in basic financing requirements',
+    'financing.process.step2': 'Material Preparation',
+    'financing.process.step2.desc': 'Professional team reviews business materials',
+    'financing.process.step3': 'Solution Determination',
+    'financing.process.step3.desc': 'Determine financing solution based on needs',
+    'financing.process.step4': 'Quick Disbursement',
+    'financing.process.step4.desc': 'Complete approval and quick disbursement',
+    'financing.partners.title': 'Partner Financial Institutions',
+    'financing.form.title': 'Get Financing Solution',
+    'financing.form.company': 'Company Name',
+    'financing.form.contact': 'Contact Information',
+    'financing.form.requirements': 'Financing Requirements',
+    'financing.form.submit': 'Submit Application'
   },
   zh: {
     // 导航栏
@@ -230,12 +278,73 @@ export const translations = {
     'matchingPage.matching.description': '从产品互补性、市场需求、业务规模等多个维度进行匹配评估，确保匹配结果全面可行。',
     'matchingPage.cooperation.title': '促成合作',
     'matchingPage.cooperation.description': '为匹配企业提供联系渠道、商务会议安排和协作指导，加速合作进程。',
+    
+    // 下载页面
+    'download.title': '客户端下载',
+    'download.desktop.title': '桌面客户端',
+    'download.mobile.title': '移动客户端',
+    'download.windows.description': '支持Windows 10及以上版本',
+    'download.macos.description': '支持macOS 10.15及以上版本',
+    'download.android.description': '支持Android 8.0及以上版本',
+    'download.ios.description': '支持iOS 13.0及以上版本',
+    'download.button.download': '立即下载',
+    'download.button.appstore': 'App Store',
+    'download.button.apk': '下载APK',
+    'download.qr.scan': '扫码下载',
+    'download.features.title': '功能特点',
+    'download.features.virtual.title': '虚拟展厅',
+    'download.features.virtual.description': '3D虚拟展厅，让您足不出户即可参观展会',
+    'download.features.translation.title': '实时翻译',
+    'download.features.translation.description': 'AI驱动的实时翻译功能，突破语言障碍',
+    'download.features.chat.title': '在线洽谈',
+    'download.features.chat.description': '高清视频会议，支持多人在线洽谈',
+    'download.system.title': '系统要求',
+    'download.system.desktop': 'Windows/macOS',
+    'download.system.mobile': 'Android/iOS',
+    
+    // 融资平台页面
+    'financing.title': '跨境融资解决方案',
+    'financing.subtitle': '为中加企业提供全方位的跨境贸易融资服务',
+    'financing.trade.title': '贸易融资',
+    'financing.trade.description': '为进出口贸易提供全方位的融资支持，包括订单融资、应收账款融资等。',
+    'financing.credit.title': '信用证服务',
+    'financing.credit.description': '提供信用证开立、通知、保兑等服务，降低国际贸易风险。',
+    'financing.insurance.title': '保函服务',
+    'financing.insurance.description': '提供投标保函、履约保函、预付款保函等多种保函服务。',
+    'financing.process.title': '融资申请流程',
+    'financing.process.step1': '提交申请',
+    'financing.process.step1.desc': '填写基本信息和融资需求',
+    'financing.process.step2': '材料审核',
+    'financing.process.step2.desc': '专业团队审核业务资料',
+    'financing.process.step3': '方案制定',
+    'financing.process.step3.desc': '根据需求决定融资方案',
+    'financing.process.step4': '快速放款',
+    'financing.process.step4.desc': '完成审批后快速放款',
+    'financing.partners.title': '合作金融机构',
+    'financing.form.title': '获取融资方案',
+    'financing.form.company': '公司名称',
+    'financing.form.contact': '联系邮箱',
+    'financing.form.requirements': '融资需求',
+    'financing.form.submit': '提交咨询'
   }
 };
 
 // 语言提供者组件
-export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('en');
+export const LanguageProvider = ({ children }) => {
+  const [language, setLanguage] = useState<Language>('zh');
+
+  // 从localStorage加载语言设置
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language');
+    if (savedLanguage) {
+      setLanguage(savedLanguage as Language);
+    }
+  }, []);
+
+  // 保存语言设置到localStorage
+  useEffect(() => {
+    localStorage.setItem('language', language);
+  }, [language]);
 
   // 翻译函数
   const t = (key: string): string => {
@@ -256,4 +365,6 @@ export const useLanguage = (): LanguageContextType => {
     throw new Error('useLanguage must be used within a LanguageProvider');
   }
   return context;
-}; 
+};
+
+export default LanguageContext; 

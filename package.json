@@ -33,5 +33,13 @@
     "@types/three": "^0.159.0",
     "eslint": "^8.55.0",
     "eslint-config-next": "^14.0.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YangChengTS/holocan-demo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YangChengTS/holocan-demo/issues"
+  },
+  "homepage": "https://github.com/YangChengTS/holocan-demo#readme"
 } 
