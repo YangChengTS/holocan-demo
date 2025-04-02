@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaGlobe } from 'react-icons/fa';
+import { FaGlobe, FaUser } from 'react-icons/fa';
 import { useLanguage } from '@/context/LanguageContext';
+import { useAuth } from '@/context/auth/AuthContext';
 
 // Navigation links based on the uploaded menu structure
 const getNavLinks = (t) => [
@@ -20,6 +21,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const { user, isAuthenticated, logout } = useAuth();
 
   // Listen for scroll events
   useEffect(() => {
@@ -54,6 +56,15 @@ const Navbar = () => {
         duration: 0.3,
       },
     },
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    logout();
+    // Optional: Close mobile menu if open
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
   };
 
   return (
@@ -98,16 +109,42 @@ const Navbar = () => {
               className="flex items-center space-x-2 text-text-dark hover:text-primary transition px-3 py-1 rounded-full border border-border hover:border-primary"
             >
               <FaGlobe className="text-sm" />
-              <span className="text-sm">{t('navbar.language')}</span>
+              <span className="text-sm">{language === 'en' ? '中文' : 'English'}</span>
             </button>
 
-            {/* Login/Register Button */}
-            <Link 
-              href="/login" 
-              className="bg-primary hover:bg-button-hover text-white rounded-md text-sm px-4 py-2 transition-all duration-300"
-            >
-              {t('navbar.signIn')}
-            </Link>
+            {/* Conditional Login/Register Button or User Menu */}
+            {isAuthenticated ? (
+              <div className="relative group">
+                <Link 
+                  href="/profile" 
+                  className="flex items-center space-x-2 text-text-dark hover:text-primary transition px-3 py-1 rounded-full border border-border hover:border-primary"
+                >
+                  <FaUser className="text-sm" />
+                  <span className="text-sm">{user?.profile.displayName || user?.profile.firstName}</span>
+                </Link>
+                <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md overflow-hidden z-50 transition-all duration-300 opacity-0 invisible group-hover:opacity-100 group-hover:visible">
+                  <Link 
+                    href="/profile" 
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary"
+                  >
+                    个人资料
+                  </Link>
+                  <button 
+                    onClick={handleLogout} 
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary"
+                  >
+                    退出登录
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <Link 
+                href="/auth/login" 
+                className="bg-primary hover:bg-button-hover text-white rounded-md text-sm px-4 py-2 transition-all duration-300"
+              >
+                {t('navbar.signIn')}
+              </Link>
+            )}
           </div>
         </div>
 
@@ -162,16 +199,36 @@ const Navbar = () => {
                   className="flex items-center space-x-2 text-text-dark hover:text-primary transition px-4 py-2 rounded-full border border-border hover:border-primary"
                 >
                   <FaGlobe className="text-base" />
-                  <span>{t('navbar.language')}</span>
+                  <span>{language === 'en' ? '中文' : 'English'}</span>
                 </button>
                 
-                <Link 
-                  href="/login" 
-                  onClick={() => setIsMenuOpen(false)}
-                  className="bg-primary hover:bg-button-hover text-white rounded-md px-8 py-3 transition-all duration-300"
-                >
-                  {t('navbar.signIn')}
-                </Link>
+                {/* Conditional Login/Register Button or User Menu for Mobile */}
+                {isAuthenticated ? (
+                  <div className="flex flex-col items-center space-y-4">
+                    <Link 
+                      href="/profile" 
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center space-x-2 text-text-dark hover:text-primary transition px-4 py-2"
+                    >
+                      <FaUser className="text-base" />
+                      <span>个人资料</span>
+                    </Link>
+                    <button 
+                      onClick={handleLogout} 
+                      className="bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md px-8 py-3 transition-all duration-300"
+                    >
+                      退出登录
+                    </button>
+                  </div>
+                ) : (
+                  <Link 
+                    href="/auth/login" 
+                    onClick={() => setIsMenuOpen(false)}
+                    className="bg-primary hover:bg-button-hover text-white rounded-md px-8 py-3 transition-all duration-300"
+                  >
+                    {t('navbar.signIn')}
+                  </Link>
+                )}
               </div>
             </motion.div>
           )}
