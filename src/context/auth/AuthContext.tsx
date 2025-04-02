@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { SafeUser } from '@/types/auth/user';
+import { SafeUser, UserRole, UserStatus, BusinessType, BusinessSize } from '@/types/auth/user';
 import { AuthResponse } from '@/types/auth/api';
 
 // 认证上下文接口
@@ -13,7 +13,8 @@ interface AuthContextType {
   logout: () => void;
   resetPassword: (email: string) => Promise<boolean>;
   confirmPasswordReset: (token: string, password: string) => Promise<boolean>;
-  updateProfile: (profileData: any) => Promise<boolean>;
+  updateProfile: (profileData: any) => Promise<{ success: boolean; error?: string }>;
+  requestPasswordReset: (email: string) => Promise<{ success: boolean; error?: string }>;
 }
 
 // 默认上下文值
@@ -27,7 +28,8 @@ const defaultContext: AuthContextType = {
   logout: () => {},
   resetPassword: async () => false,
   confirmPasswordReset: async () => false,
-  updateProfile: async () => false,
+  updateProfile: async () => ({ success: false, error: '用户未登录' }),
+  requestPasswordReset: async () => ({ success: false, error: "Context not initialized" }),
 };
 
 // 创建上下文
@@ -90,13 +92,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               lastName: 'User',
               language: 'zh',
             },
-            role: 'business',
-            status: 'active',
+            role: UserRole.BUSINESS,
+            status: UserStatus.ACTIVE,
             businessInfo: {
               companyName: '示例公司',
               companyNameEn: 'Example Company',
-              businessType: 'tech',
-              businessSize: 'medium',
+              businessType: BusinessType.TECH,
+              businessSize: BusinessSize.MEDIUM,
               country: '中国',
               province: '北京',
               city: '北京',
@@ -154,8 +156,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               lastName: formData.lastName,
               language: formData.language || 'zh',
             },
-            role: formData.role || 'user',
-            status: 'pending',
+            role: formData.role || UserRole.USER,
+            status: UserStatus.PENDING,
           },
           token: 'mock-jwt-token'
         },
@@ -209,6 +211,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  // 请求密码重置链接
+  const requestPasswordReset = async (email: string): Promise<{ success: boolean; error?: string }> => {
+    try {
+      // 实际项目中这里应该是API调用
+      // const response = await fetch('/api/auth/request-reset', {...})
+      
+      // 模拟成功发送重置链接
+      console.log(`发送重置密码链接到邮箱: ${email}`);
+      return { success: true };
+    } catch (error) {
+      console.error('Request password reset error:', error);
+      return { 
+        success: false, 
+        error: '发送重置链接失败，请稍后再试' 
+      };
+    }
+  };
+
   // 确认密码重置
   const confirmPasswordReset = async (token: string, password: string): Promise<boolean> => {
     try {
@@ -224,7 +244,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   // 更新用户资料
-  const updateProfile = async (profileData: any): Promise<boolean> => {
+  const updateProfile = async (profileData: any): Promise<{ success: boolean; error?: string }> => {
     try {
       // 实际项目中这里应该是API调用
       // const response = await fetch('/api/user/profile', {...})
@@ -235,19 +255,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           ...user,
           profile: {
             ...user.profile,
-            ...profileData
-          }
+            firstName: profileData.firstName || user.profile.firstName,
+            lastName: profileData.lastName || user.profile.lastName,
+            displayName: profileData.displayName || user.profile.displayName,
+            phoneNumber: profileData.phoneNumber || user.profile.phoneNumber,
+            jobTitle: profileData.jobTitle || user.profile.jobTitle,
+            location: profileData.location || user.profile.location,
+            bio: profileData.bio || user.profile.bio,
+            language: profileData.language || user.profile.language,
+          },
+          prefersDarkMode: profileData.darkMode !== undefined ? profileData.darkMode : user.prefersDarkMode
         };
         
         setUser(updatedUser);
         localStorage.setItem('authUser', JSON.stringify(updatedUser));
-        return true;
+        return { success: true };
       }
       
-      return false;
+      return { success: false, error: '用户未登录' };
     } catch (error) {
       console.error('Update profile error:', error);
-      return false;
+      return { 
+        success: false, 
+        error: '更新资料失败，请稍后再试' 
+      };
     }
   };
 
@@ -263,6 +294,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     resetPassword,
     confirmPasswordReset,
     updateProfile,
+    requestPasswordReset,
   };
 
   return (

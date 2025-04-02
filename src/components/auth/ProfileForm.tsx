@@ -69,16 +69,16 @@ const ProfileForm = ({ language = 'zh' }: ProfileFormProps) => {
   } = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      firstName: user?.firstName || '',
-      lastName: user?.lastName || '',
-      displayName: user?.displayName || '',
+      firstName: user?.profile?.firstName || '',
+      lastName: user?.profile?.lastName || '',
+      displayName: user?.profile?.displayName || '',
       email: user?.email || '',
-      phoneNumber: user?.phoneNumber || '',
-      jobTitle: user?.jobTitle || '',
-      location: user?.location || '',
-      bio: user?.bio || '',
-      language: user?.language || language,
-      darkMode: user?.darkMode || false,
+      phoneNumber: user?.profile?.phoneNumber || '',
+      jobTitle: user?.profile?.jobTitle || '',
+      location: user?.profile?.location || '',
+      bio: user?.profile?.bio || '',
+      language: user?.profile?.language || language,
+      darkMode: user?.prefersDarkMode || false,
     },
   });
 
@@ -86,16 +86,16 @@ const ProfileForm = ({ language = 'zh' }: ProfileFormProps) => {
   useEffect(() => {
     if (user) {
       reset({
-        firstName: user.firstName || '',
-        lastName: user.lastName || '',
-        displayName: user.displayName || '',
+        firstName: user.profile?.firstName || '',
+        lastName: user.profile?.lastName || '',
+        displayName: user.profile?.displayName || '',
         email: user.email || '',
-        phoneNumber: user.phoneNumber || '',
-        jobTitle: user.jobTitle || '',
-        location: user.location || '',
-        bio: user.bio || '',
-        language: user.language || language,
-        darkMode: user.darkMode || false,
+        phoneNumber: user.profile?.phoneNumber || '',
+        jobTitle: user.profile?.jobTitle || '',
+        location: user.profile?.location || '',
+        bio: user.profile?.bio || '',
+        language: user.profile?.language || language,
+        darkMode: user.prefersDarkMode || false,
       });
     }
   }, [user, reset, language]);

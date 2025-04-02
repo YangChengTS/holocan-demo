@@ -38,8 +38,8 @@ export const registerSchema = z
     lastName: z.string().min(1, { message: '姓氏不能为空' }),
     role: z.nativeEnum(UserRole).default(UserRole.USER),
     language: z.enum(['zh', 'en']).default('zh'),
-    agreeToTerms: z.literal(true, {
-      errorMap: () => ({ message: '请同意服务条款和隐私政策' }),
+    agreeToTerms: z.boolean().refine(val => val === true, {
+      message: '请同意服务条款和隐私政策',
     }),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -77,6 +77,27 @@ export const passwordResetConfirmSchema = z
     message: '两次输入的密码不一致',
     path: ['confirmPassword'],
   });
+
+/**
+ * 个人资料验证Schema
+ */
+export const profileSchema = z.object({
+  firstName: z.string().min(1, { message: '名字不能为空' }),
+  lastName: z.string().min(1, { message: '姓氏不能为空' }),
+  displayName: z.string().optional(),
+  email: z.string().email({ message: '请输入有效的邮箱地址' }),
+  phoneNumber: z
+    .string()
+    .regex(/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/, {
+      message: '请输入有效的电话号码',
+    })
+    .optional(),
+  jobTitle: z.string().optional(),
+  location: z.string().optional(),
+  bio: z.string().max(500, { message: '简介不能超过500个字符' }).optional(),
+  language: z.enum(['zh', 'en']).default('zh'),
+  darkMode: z.boolean().optional(),
+});
 
 /**
  * 个人资料更新验证Schema
